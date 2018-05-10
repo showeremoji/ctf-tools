@@ -16,6 +16,10 @@ def bin2hex(b):
 def hex2bin(h):
     return bin(int(h, 16))[2:]
 
+def int2hex(i):
+    i = int(i)
+    return hex(i)[2:]
+
 def hex2int(h):
     h = h.lower()
     def h2d(h):
@@ -35,7 +39,12 @@ if __name__ == '__main__':
     assert(hex2bin('c0de') == '1100000011011110')
 
     assert(hex2int('1') == 1)
+    assert(int2hex(1) == '1')
     assert(hex2int('f') == 15)
+    assert(int2hex(15) == 'f')
     assert(hex2int('ff') == 255)
+    assert(int2hex(255) == 'ff')
+    assert(hex2int('3e8') == 1000)
+    assert(int2hex(1000) == '3e8')
 
     print('Asserts passed')
