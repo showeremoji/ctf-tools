@@ -21,15 +21,7 @@ def int2hex(i):
     return hex(i)[2:]
 
 def hex2int(h):
-    h = h.lower()
-    def h2d(h):
-        return (ord(h) - ord('a') + 10) if 'a' <= h <= 'f' else int(h)
-    v = [h2d(i) for i in h]
-    r = 0
-    for hd in h:
-        r *= 16
-        r += h2d(hd)
-    return r
+    return int('0x' + h, 16)
 
 if __name__ == '__main__':
     assert(b642hex('woidjw==') == 'c2889d8f')
