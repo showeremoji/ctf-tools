@@ -23,13 +23,27 @@ def int2hex(i):
 def hex2int(h):
     return int('0x' + h, 16)
 
+def convert(src, dst, s):
+    srcf = {'hex': lambda x: x,
+            'int': int2hex,
+            'bin': bin2hex,
+            'b64': b642hex}
+    dstf = {'hex': lambda x: x,
+            'int': hex2int,
+            'bin': hex2bin,
+            'b64': hex2b64}
+    if src not in srcf:
+        raise 'src format {} not supported'.format(src)
+    if dst not in dstf:
+        raise 'dst format {} not supported'.format(dst)
+    return dstf[dst](srcf[src](s))
+
 if __name__ == '__main__':
     assert(b642hex('woidjw==') == 'c2889d8f')
     assert(hex2b64('c2889d8f') == 'woidjw==')
 
     assert(bin2hex('1100000011011110') == 'c0de')
     assert(hex2bin('c0de') == '1100000011011110')
-
     assert(hex2int('1') == 1)
     assert(int2hex(1) == '1')
     assert(hex2int('f') == 15)
@@ -38,5 +52,8 @@ if __name__ == '__main__':
     assert(int2hex(255) == 'ff')
     assert(hex2int('3e8') == 1000)
     assert(int2hex(1000) == '3e8')
+
+    assert convert('int', 'int', 100) == 100
+    assert convert('hex', 'hex', "14d") == "14d"
 
     print('Asserts passed')
